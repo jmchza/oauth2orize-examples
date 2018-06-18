@@ -8,6 +8,7 @@ module.exports.find = (key, done) => {
 };
 
 module.exports.save = (code, clientId, redirectUri, userId, done) => {
+  console.log('Storing code: ' + code + ' userId: ' + userId + ' clientId: '+ clientId + ' redirectUri: ' + redirectUri);
   codes[code] = { clientId, redirectUri, userId };
   done();
 };

@@ -16,6 +16,7 @@ const db = require('../db');
  */
 passport.use(new LocalStrategy(
   (username, password, done) => {
+    console.log('auth::LocalStrategy:: username: ' + username + ' password: ' + password );
     db.users.findByUsername(username, (error, user) => {
       if (error) return done(error);
       if (!user) return done(null, false);
@@ -43,6 +44,7 @@ passport.deserializeUser((id, done) => {
  * the specification, in practice it is quite common.
  */
 function verifyClient(clientId, clientSecret, done) {
+  console.log('auth:: clientId: ' + clientId + ' clientSecret: ' + clientSecret );
   db.clients.findByClientId(clientId, (error, client) => {
     if (error) return done(error);
     if (!client) return done(null, false);
@@ -65,6 +67,7 @@ passport.use(new ClientPasswordStrategy(verifyClient));
  */
 passport.use(new BearerStrategy(
   (accessToken, done) => {
+
     db.accessTokens.find(accessToken, (error, token) => {
       if (error) return done(error);
       if (!token) return done(null, false);
